@@ -1,4 +1,2 @@
-*.rkt	 linguist-language=scheme
-
-
-
+$ cat .gitattributes
+*.rkt linguist-language=Scheme

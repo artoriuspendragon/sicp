@@ -1,0 +1,16 @@
+#lang racket
+(define (s-sum term a  r k h n) 
+(define (s-next a h) (+ a h))
+(define (r-next r) (cond ((= r 2)4)
+                         ((= r 4)2)
+                         ))
+  (if (> k n) 0
+       (+ (* r (term a)) (s-sum term (s-next a h) (r-next r) (+ k 1) h n ))
+      )
+)
+(define (cube a) (* a a a))
+(define (simpson f a b n)
+  (define h (/ (- b a)  n ) )
+ (* (/ h 3.0) (+ (f a) (f (+ a (* h n))) (s-sum cube (+ a h)  4 1 h (- n 1))))
+  )
+(simpson cube 0 1 1000000)

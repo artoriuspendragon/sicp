@@ -1,0 +1,32 @@
+#lang racket
+(define (sum term a next b) 
+  (if (> a b) 0
+       (+ (term a) (sum term (next a) next b))
+      )
+)
+(define (even? a) (= (remainder a 2) 0))
+(define (quick-power a  n)
+  (cond ((= n 1) a)
+        ((even? n) (quick-power (* a a) (/ n 2)))
+        (else (* a (quick-power a (- n 1))))
+  )
+)
+(define (e-sum e)
+  (quick-power (+ 1.0 (/ 1.0 e)) e
+))
+(define (intergral f a b dx)
+  (define (add-dx x ) (+ x dx))
+  (* (sum f (+ a (/ dx 2.0)) add-dx b) dx)
+  )
+(define (pi-sum a b)
+  (define (pi-term x)
+    (/ 1.0 (* x (+ x 2))))
+   (define (pi-next x)
+     (+ x 4))
+(sum pi-term a pi-next b))
+
+
+;(* 8 (pi-sum 1 1000))
+;(e-sum 10000)
+(define (cube x) (* x x x))
+(intergral cube 0 1 0.01)

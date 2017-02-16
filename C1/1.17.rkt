@@ -1,7 +1,6 @@
 #lang racket
 (define (expt-multip a b)
-  (if(= b 0)
-     0
+  (if(= b 0) 0
      (+ a (expt-multip a (- b 1)))
    )
   )
@@ -18,12 +17,12 @@
      )
   )
 (define (my-expt-multip a b )
-  (display "a")
+  (display "a \n")
   (cond ((= b 1) a)
          ((even? b) (my-expt-multip (double a) (halve b) ) )
         (else (+ a (my-expt-multip a (- b 1) )))
    )
   
   )
-(define (my-expt-start a b) (my-expt-multip a b a))
-(my-expt-multip 46 1000)
+
+(expt-multip 46 0)

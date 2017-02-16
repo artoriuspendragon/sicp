@@ -1,0 +1,25 @@
+#lang racket
+(define (even? x)  (= (remainder x 2)0))
+(define (square x)(* x x))
+
+(define (expmod base exp m)
+  (cond ((= exp 0) 1)
+        ((Miller-Rabin? exp m) 0)
+        ((even? exp) (remainder (square(expmod base (/ exp 2) m)) m))
+        (else (remainder (* base (expmod base (- exp 1) m)) m))
+  )
+)
+  
+(define (fermat n a)
+(cond ((= a n) display "cheat success")
+      ((evenmod? a n) (fermat n (+ a 1)))
+     
+   (else (display "wrong"))
+ ))
+(define (evenmod? a n)
+  (= 1 (expmod a (- n 1) n))
+  )
+(define (Miller-Rabin? a n)
+  (and (not (= a 1)) (not (= a (- n 1))) (= (remainder (square a) n) 1))
+  )
+(fermat 6601 2)

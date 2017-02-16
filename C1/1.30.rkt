@@ -1,0 +1,15 @@
+#lang racket
+(define (even? x)  (= (remainder x 2)0))
+(define (expmod base exp m)
+  (cond ((= exp 0)1)
+        ((even? exp) (remainder (square(expmod base (/ base 2))) m))
+  )
+  )
+(define (fermat n a)
+(
+      (evenmod? a n)
+      )
+  )
+(define (evenmod? a n)
+  (= ())
+  )

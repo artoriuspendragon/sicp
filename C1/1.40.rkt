@@ -1,5 +1,5 @@
 #lang racket
-(define tolerance 0.0000001)
+(define tolerance 0.00000001)
 (define (fixed-point f first-guess)
   (define (enough-guess? x y) (< (abs (- x y)) tolerance))
 (define (start-guess x)
@@ -12,10 +12,8 @@
        
          )))
   (start-guess  first-guess))
-
-
 (define (deriv g)
-  (define dx 0.000001)
+  (define dx 0.000000001)
   (lambda(x)
     (/(-(g(+ x dx)) (g x)) dx)))
 (define (newton-transform g)
@@ -26,7 +24,12 @@
 (define  (newtons-method g guess)
   (fixed-point (newton-transform g) guess)
   )
-(define (sqrt x)
-  (newtons-method (lambda(y)(- (* y y) x)) 1.0)
-  )
-(sqrt 36)
+
+
+
+
+
+(define (cubic a b c)
+  (lambda (x) (+ (*　x x x) (* x x a) (* b x) c　)))
+
+((cubic 2 2 2) (newtons-method (cubic 2 2 2) 10))

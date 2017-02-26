@@ -1,0 +1,7 @@
+#lang racket
+(define (last-pair item)
+   (if (null? (cdr item)) (car item)
+       (last-pair (cdr item))
+    )
+  )
+(last-pair (list 23 72 149 34))

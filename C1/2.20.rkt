@@ -1,0 +1,13 @@
+#lang racket
+(define (even? a) (= (remainder a 2) 0))
+(define (same-parity x . z)
+  (define (start-combination item cond?)
+    (cond((null? item) null)
+         ((cond? (car item)) (cons (car item) (start-combination (cdr item) cond?)))
+         (else (start-combination (cdr item) cond?))
+    ))
+  (if(even? x) (start-combination (cons x z) even?)
+(start-combination (cons x z) (lambda (x) (not (even? x))))
+     )
+  )
+(same-parity 4 2 3 4 5 6 7 8 9 10 11 12 13)

@@ -1,0 +1,16 @@
+#lang racket
+(define (reverse item)
+  (define (start-reverse item reversed)
+  (if (null? item) reversed
+      (start-reverse (cdr item) (cons (car item) reversed))
+   )
+  )
+  (start-reverse (cdr item) (cons (car item) null))
+)
+(define (deep-reverse item)
+ (cond((or (null? item) (not (pair? item)))item)
+      (else(reverse (list (deep-reverse (car item))(deep-reverse (cadr item)))))
+   )
+)
+(define x (list (list 1 2) (list 3 4)))
+(reverse x)

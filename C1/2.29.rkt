@@ -1,0 +1,27 @@
+#lang racket
+(define (make-mobile left right)
+  (list left right))
+(define (make-branch length structure)
+  (list length structure)
+  )
+(define (left-branch mobile) (car mobile))
+(define (right-branch mobile) (cadr mobile))
+(define (branch-length branch) (car branch))
+(define (branch-structure branch) (cadr branch))
+(define (branch-weight branch) (
+         if(not (pair? (branch-structure branch))) (branch-structure branch)
+           (total-weight (branch-structure branch))
+                         ))
+(define (total-weight mobile)
+  (cond ((not(pair? mobile)) mobile)
+  (else (+ (total-weight (branch-structure (left-branch mobile))) (total-weight(branch-structure (right-branch mobile))))
+  )))
+(define (if-balanced mobile)
+  (cond ((not(pair? mobile)) #t)
+        (else (and (= (* (branch-length (left-branch mobile)) (branch-weight (left-branch mobile))) (*(branch-length (right-branch mobile)) (branch-weight (right-branch mobile)))) (if-balanced  (branch-structure (left-branch mobile))) (if-balanced  (branch-structure (right-branch mobile)))))
+   )
+)
+
+(total-weight (make-mobile (make-branch 1 2) (make-branch 2 (make-mobile (make-branch 3 4) (make-branch 2 (make-mobile (make-branch 3 5) (make-branch 5 4)))))))
+(if-balanced(make-mobile (make-branch 1 2) (make-branch 2 (make-mobile (make-branch 3 4) (make-branch 2 (make-mobile (make-branch 3 5) (make-branch 5 4)))))) )
+;can't test "if-balanced"

@@ -1,0 +1,2 @@
+#lang racket
+(cdr ''abracadabra)

@@ -1,0 +1,35 @@
+#lang racket
+(define (=number? exp num) (and (number? exp) (= exp num)))
+(define (variable? x) (symbol? x))
+(define (same-variable? x y) (and (variable? x ) (variable? y) (equal? x y )))
+(define (addend s) (cadr s))
+(define (augend s) (cadr (cdr s)))
+(define (make-sum a1 a2)(cond ((=number? a1 0) a2)
+                              ((=number? a2 0) a1)
+                              ((and (number? a1) (number? a2)) (+ a1 a2))
+                              (else (list '+ a1 a2))))
+(define (sum? x) (and (pair? x)(equal? '+ (car x))))
+
+(define (make-product a1 a2) (cond ((or (=number? a1 0) (=number? a2 0)) 0)
+                                   ((=number? a1 1) a2)
+                                   ((=number? a2 1) a1)
+                                   ((and (number? a1) (number? a2)) (* a1 a2))
+                                   (else (list '* a1 a2))))
+(define (product? s) (and (equal? '* (car s)) (pair? s)))
+(define (multiplier s) (cadr s))
+(define (multiplicand s) (caddr s))
+
+(define (deriv exp var)
+  (cond ((number? exp) 0)
+        ((variable? exp)
+         (if (same-variable? exp var) 1 0))
+        ((sum? exp)
+         (make-sum (deriv (addend exp) var) (deriv (augend exp) var)))
+        ((product? exp) (make-sum (make-product (multiplier exp) (deriv (multiplicand exp) var)) (make-product (deriv (multiplier exp) var) (multiplicand exp))))
+        (else (error exp))))
+
+(deriv '(+ x 3) 'x)
+(deriv '(* x y) 'x)
+(deriv '(* (* x y) (+ x 3)) 'x)
+
+
